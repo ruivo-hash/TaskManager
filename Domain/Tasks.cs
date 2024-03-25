@@ -1,6 +1,11 @@
-﻿namespace TaskManager.Domain;
+﻿using Flunt.Notifications;
+using Flunt.Validations;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Contracts;
 
-public class Tasks
+namespace TaskManager.Domain;
+
+public class Tasks : Notifiable<Notification>
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -8,6 +13,7 @@ public class Tasks
     public DateTime CreateDt { get; set; }
     public DateTime FinishDt { get; set; }
     public int UserId { get; set; }
+    //public User User { get; set; }
 
     public Tasks(string title, string description, DateTime createDt, DateTime finishDt, int userId)
     {
@@ -16,5 +22,15 @@ public class Tasks
         CreateDt = createDt;
         FinishDt = finishDt;
         UserId = userId;
+
+        Validate();
+    }
+
+    public void Validate()
+    {
+        var contract = new Contract<Tasks>()
+            .IsNotNullOrEmpty(Title, "Title")
+            .IsNotNullOrEmpty(Description, "Description");
+        AddNotifications(contract);
     }
 }

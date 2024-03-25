@@ -11,7 +11,7 @@ using TaskManager.Infra.Data;
 namespace TaskManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240323024242_Initial")]
+    [Migration("20240323173320_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
