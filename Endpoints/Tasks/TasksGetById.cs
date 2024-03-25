@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using TaskManager.Infra.Data;
 using TaskManager.Services;
 
 namespace TaskManager.Endpoints.Tasks;
 
-public class TasksDelete
+public class TasksGetById
 {
     public static string Template => "/tasks/{id}";
-    public static string[] Methods => new string[] { HttpMethod.Delete.ToString() };
+    public static string[] Methods => new string[] { HttpMethod.Get.ToString() };
     public static Delegate Handle => Action;
 
     public static IResult Action([FromRoute] int id, ApplicationDbContext context, HttpContext http)
@@ -23,10 +24,6 @@ public class TasksDelete
         if (task.UserId != user.Id)
             return Results.BadRequest("Esta task não pertence a você");
 
-        context.Tasks.Remove(task);
-
-        context.SaveChanges();
-
-        return Results.Ok();
+        return Results.Ok(task);
     }
 }

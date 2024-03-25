@@ -18,7 +18,7 @@ public class TasksGetByUser
         var user = context.Users.Where(u => u.Email == email).FirstOrDefault();
 
         var tasks = context.Tasks.Where(t => t.UserId == user.Id);
-        var response = tasks.Select(t => new TasksResponse { Title = t.Title, Description = t.Description, UserId = t.UserId, CreateDt = t.CreateDt });
+        var response = tasks.Select(t => new TasksResponse { Id = t.Id, Title = t.Title, Description = t.Description, UserId = t.UserId, CreateDt = t.CreateDt, FinishDt = t.FinishDt });
 
         return Results.Ok(response);
     }

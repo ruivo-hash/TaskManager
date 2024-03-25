@@ -15,6 +15,8 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(builder);
 
+        builder.Entity<User>().HasData(new User("admin", "admin", "admin") { Id = 1 });
+
         builder.Ignore<Notification>();
     }
 }

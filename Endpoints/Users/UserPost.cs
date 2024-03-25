@@ -16,6 +16,10 @@ public class UserPost
         if (!user.IsValid)
             return Results.BadRequest(user.Notifications);
 
+        var userCreated = context.Users.Where(u => u.Email == user.Email).FirstOrDefault();
+        if (userCreated != null)
+            return Results.BadRequest("E-mail já cadastrado no sistema");
+
         context.Users.Add(user);
         context.SaveChanges();
 

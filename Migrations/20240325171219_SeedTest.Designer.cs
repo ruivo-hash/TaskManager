@@ -11,8 +11,8 @@ using TaskManager.Infra.Data;
 namespace TaskManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240323173320_Initial")]
-    partial class Initial
+    [Migration("20240325171219_SeedTest")]
+    partial class SeedTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,15 @@ namespace TaskManager.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "admin",
+                            Name = "admin",
+                            Password = "admin"
+                        });
                 });
 
             modelBuilder.Entity("TaskManager.Domain.Tasks", b =>

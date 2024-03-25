@@ -60,6 +60,8 @@ app.MapMethods(UserGetAll.Template, UserGetAll.Methods, UserGetAll.Handle);
 
 app.MapMethods(TasksGetByUser.Template, TasksGetByUser.Methods, TasksGetByUser.Handle).RequireAuthorization();
 
+app.MapMethods(TasksGetById.Template, TasksGetById.Methods, TasksGetById.Handle).RequireAuthorization();
+
 app.MapMethods(TasksPost.Template, TasksPost.Methods, TasksPost.Handle);
 
 app.MapMethods(TasksPut.Template, TasksPut.Methods, TasksPut.Handle).RequireAuthorization();

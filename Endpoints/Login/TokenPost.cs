@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+﻿using TaskManager.Services;
 using TaskManager.Infra.Data;
 
 namespace TaskManager.Endpoints.Login;
@@ -21,25 +16,11 @@ public class TokenPost
         if (user.Password != request.Password)
             Results.BadRequest();
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(configuration["JwtBearerTokenSettings:SecretKey"]);
-        var tokenDescriptor = new SecurityTokenDescriptor
-        {
-            Subject = new ClaimsIdentity(new Claim[]
-            {
-                new Claim(ClaimTypes.Email, user.Email)
-            }),
-            Expires = DateTime.UtcNow.AddMinutes(30),
-            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
-        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var token = TokenService.GenerateToken(configuration, user);
 
-        var jwtSecurityToken = tokenHandler.ReadJwtToken(tokenHandler.WriteToken(token));
-        var emailToken = jwtSecurityToken.Claims.First(c => c.Type == "email").Value;
+        //var jwtSecurityToken = tokenHandler.ReadJwtToken(tokenHandler.WriteToken(token));
+        //var emailToken = jwtSecurityToken.Claims.First(c => c.Type == "email").Value;
 
-        return Results.Ok(new
-        {
-            token = tokenHandler.WriteToken(token)
-        });
+        return Results.Ok(token);
     }
 }

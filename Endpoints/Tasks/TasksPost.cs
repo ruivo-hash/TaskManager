@@ -1,5 +1,6 @@
 ﻿using TaskManager.Domain;
 using TaskManager.Infra.Data;
+using TaskManager.Services;
 
 namespace TaskManager.Endpoints.Tasks;
 
@@ -9,9 +10,13 @@ public class TasksPost
     public static string[] Methods => new string[] { HttpMethod.Post.ToString() };
     public static Delegate Handle => Action;
 
-    public static IResult Action(TasksRequest taskRequest, ApplicationDbContext context)
+    public static IResult Action(TasksRequest taskRequest, ApplicationDbContext context, HttpContext http)
     {
-        var task = new Domain.Tasks(taskRequest.Title, taskRequest.Description, DateTime.Now, Convert.ToDateTime(null), taskRequest.UserId);
+        var email = TokenService.DecodingJWTtoGetEmail(http);
+
+        var user = context.Users.Where(u => u.Email == email).FirstOrDefault();
+
+        var task = new Domain.Tasks(taskRequest.Title, taskRequest.Description, DateTime.UtcNow, Convert.ToDateTime(null), user.Id);
 
         if (!task.IsValid)
             return Results.BadRequest(task.Notifications);
