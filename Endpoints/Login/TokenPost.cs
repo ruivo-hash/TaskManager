@@ -18,9 +18,6 @@ public class TokenPost
 
         var token = TokenService.GenerateToken(configuration, user);
 
-        //var jwtSecurityToken = tokenHandler.ReadJwtToken(tokenHandler.WriteToken(token));
-        //var emailToken = jwtSecurityToken.Claims.First(c => c.Type == "email").Value;
-
         return Results.Ok(token);
     }
 }

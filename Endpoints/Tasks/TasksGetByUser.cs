@@ -11,10 +11,7 @@ public class TasksGetByUser
 
     public static IResult Action(ApplicationDbContext context, HttpContext http)
     {
-        //var jwtSecurityToken = tokenHandler.ReadJwtToken(tokenHandler.WriteToken(token));
-        //var emailToken = jwtSecurityToken.Claims.First(c => c.Type == "email").Value;
         var email = http.User.Claims.First().Value;
-
         var user = context.Users.Where(u => u.Email == email).FirstOrDefault();
 
         var tasks = context.Tasks.Where(t => t.UserId == user.Id);

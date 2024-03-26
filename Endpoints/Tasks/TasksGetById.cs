@@ -14,6 +14,7 @@ public class TasksGetById
     public static IResult Action([FromRoute] int id, ApplicationDbContext context, HttpContext http)
     {
         var email = TokenService.DecodingJWTtoGetEmail(http);
+
         var user = context.Users.Where(u => u.Email == email).FirstOrDefault();
 
         var task = context.Tasks.Where(t => t.Id == id).FirstOrDefault();

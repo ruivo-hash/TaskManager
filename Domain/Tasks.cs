@@ -13,7 +13,6 @@ public class Tasks : Notifiable<Notification>
     public DateTime CreateDt { get; set; }
     public DateTime FinishDt { get; set; }
     public int UserId { get; set; }
-    //public User User { get; set; }
 
     public Tasks(string title, string description, DateTime createDt, DateTime finishDt, int userId)
     {
