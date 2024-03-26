@@ -54,15 +54,15 @@ app.UseHttpsRedirection();
 
 app.MapMethods(TokenPost.Template, TokenPost.Methods, TokenPost.Handle);
 
-app.MapMethods(UserPost.Template, UserPost.Methods, UserPost.Handle);
+app.MapMethods(UserPost.Template, UserPost.Methods, UserPost.Handle).RequireAuthorization();
 
-app.MapMethods(UserGetAll.Template, UserGetAll.Methods, UserGetAll.Handle);
+app.MapMethods(UserGetAll.Template, UserGetAll.Methods, UserGetAll.Handle).RequireAuthorization();
 
 app.MapMethods(TasksGetByUser.Template, TasksGetByUser.Methods, TasksGetByUser.Handle).RequireAuthorization();
 
 app.MapMethods(TasksGetById.Template, TasksGetById.Methods, TasksGetById.Handle).RequireAuthorization();
 
-app.MapMethods(TasksPost.Template, TasksPost.Methods, TasksPost.Handle);
+app.MapMethods(TasksPost.Template, TasksPost.Methods, TasksPost.Handle).RequireAuthorization();
 
 app.MapMethods(TasksPut.Template, TasksPut.Methods, TasksPut.Handle).RequireAuthorization();
 
